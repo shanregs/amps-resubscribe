@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.bmo.amps</groupId>
+        <artifactId>amps-queue-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>amps-reconnect-framework</artifactId>
+    <name>amps-reconnect-framework</name>
+    <description>AMPS HA Client Reconnection Framework (full SOLID architecture)</description>
+
+    <properties>
+        <awaitility.version>4.2.2</awaitility.version>
+    </properties>
+
+    <dependencies>
+        <!-- Spring Boot core: SmartLifecycle, @ConfigurationProperties, DI -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!--
+            AMPS Java Client. 60East publishes this to Maven Central as com.crankuptheamps:amps-client.
+            If your environment resolves dependencies from a private/internal mirror instead, point that
+            mirror at the same coordinates, or add 60East's repository explicitly:
+                https://repo.crankuptheamps.com/maven (verify current URL against your AMPS license portal)
+        -->
+        <dependency>
+            <groupId>com.crankuptheamps</groupId>
+            <artifactId>amps-client</artifactId>
+            <version>${amps-client.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Async condition polling for reader-thread/state-transition assertions (see TEST_PLAN.md) -->
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <version>${awaitility.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>

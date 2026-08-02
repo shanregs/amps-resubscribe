@@ -1,0 +1,31 @@
+{
+  "groups": [
+    {
+      "name": "amps",
+      "type": "com.bmo.amps.simple.AmpsSubscribeConfig",
+      "sourceType": "com.bmo.amps.simple.AmpsSubscribeConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "amps.client-count",
+      "type": "java.lang.Integer",
+      "sourceType": "com.bmo.amps.simple.AmpsSubscribeConfig",
+      "defaultValue": 0
+    },
+    {
+      "name": "amps.queue",
+      "type": "java.lang.String",
+      "sourceType": "com.bmo.amps.simple.AmpsSubscribeConfig"
+    },
+    {
+      "name": "amps.uris",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "com.bmo.amps.simple.AmpsSubscribeConfig"
+    }
+  ],
+  "hints": [],
+  "ignored": {
+    "properties": []
+  }
+}

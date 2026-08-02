@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: amps-subscriber-simple
+
+# For local primary/secondary failover testing (e.g. two ampServer instances, or the HA lab in
+# docs/HA_AMPS_LAB_SETUP_GUIDE.md), list both URIs.
+#
+# client-count HAClients are created in code (CLIENT_1..CLIENT_N), all subscribed to the same
+# queue below, as competing consumers — that's the configurable number of AMPS reader threads.
+amps:
+  uris:
+    - tcp://172.21.12.69:9107/amps/json   # LAB PRIMARY
+#    - tcp://172.21.12.69:9117/amps/json   # LAB SECONDARY
+  queue: /queue/orders
+  client-count: 2
+
+logging:
+  level:
+    com.bmo.amps.subscriber: DEBUG

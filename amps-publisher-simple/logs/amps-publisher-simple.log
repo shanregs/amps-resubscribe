@@ -1,0 +1,6 @@
+2026-08-02T15:47:49.627+05:30  INFO 35936 --- [amps-publisher-simple] [main] com.bmo.amps.publisher.SimplePublisherApplication       : Starting Application using Java 21.0.6 with PID 35936 (D:\me\work\bmo\amps-queue\amps-resubscribe\amps-publisher-simple\target\classes started by shanm in D:\me\work\bmo\amps-queue\amps-resubscribe\amps-publisher-simple)
+2026-08-02T15:47:49.631+05:30  INFO 35936 --- [amps-publisher-simple] [main] com.bmo.amps.publisher.SimplePublisherApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-08-02T15:47:50.157+05:30  INFO 35936 --- [amps-publisher-simple] [main] com.bmo.amps.publisher.AmpsPublisher     : order-publisher20260802-154749883 Connected
+2026-08-02T15:47:50.172+05:30  INFO 35936 --- [amps-publisher-simple] [main] com.bmo.amps.publisher.AmpsPublisher     : order-publisher20260802-154749883 LoggedOn, publishing started
+2026-08-02T15:47:50.176+05:30  INFO 35936 --- [amps-publisher-simple] [amps-publisher-/queue/orders] com.bmo.amps.publisher.AmpsPublisher     : order-publisher20260802-154749883 Publisher Started [queue=/queue/orders, rps=5.0, burst=10]
+2026-08-02T15:47:50.182+05:30  INFO 35936 --- [amps-publisher-simple] [main] com.bmo.amps.publisher.SimplePublisherApplication       : Started Application in 1.03 seconds (process running for 1.294)
