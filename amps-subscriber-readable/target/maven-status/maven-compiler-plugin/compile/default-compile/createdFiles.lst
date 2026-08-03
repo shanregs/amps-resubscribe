@@ -1,0 +1,9 @@
+com\bmo\amps\subscriber\readable\SubscriberSettings.class
+com\bmo\amps\subscriber\readable\SubscriberSettings$ClientDefinition.class
+com\bmo\amps\subscriber\readable\MessageHandler.class
+com\bmo\amps\subscriber\readable\SubscriberService.class
+com\bmo\amps\subscriber\readable\QueueSubscription.class
+com\bmo\amps\subscriber\readable\DeliveredMessage.class
+com\bmo\amps\subscriber\readable\ReconnectLogger.class
+META-INF\spring-configuration-metadata.json
+com\bmo\amps\subscriber\readable\SubscriberApplication.class

@@ -6,6 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="amps-subscriber-readable" />
+        <module name="amps-publisher-readable" />
         <module name="amps-publisher-simple" />
         <module name="amps-subscriber-simple" />
         <module name="amps-reconnect-simple" />
@@ -15,11 +17,13 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="amps-publisher-simple" options="-parameters --add-modules java.desktop" />
+      <module name="amps-publisher-readable" options="-parameters" />
+      <module name="amps-publisher-simple" options="-parameters" />
       <module name="amps-reconnect-simple" options="-parameters" />
       <module name="amps-resubscribe" options="" />
       <module name="amps-resubscribe (1)" options="-parameters" />
-      <module name="amps-subscriber-simple" options="-parameters --add-modules java.desktop" />
+      <module name="amps-subscriber-readable" options="-parameters" />
+      <module name="amps-subscriber-simple" options="-parameters" />
     </option>
   </component>
 </project>

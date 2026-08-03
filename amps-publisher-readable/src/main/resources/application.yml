@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: amps-publisher-readable
+
+# Publishes synthetic order-event messages onto AMPS queues at a configurable, per-queue rate, so
+# amps-subscriber-readable / amps-subscriber-simple have live traffic to observe during HA failover
+# testing — see docs/HA_AMPS_LAB_SETUP_GUIDE.md for the lab topology (primary/secondary URIs, queue
+# names) these URIs and queue names should match.
+#
+# uris    - failover candidates, tried in order by HAClient's DefaultServerChooser
+# targets - one entry per queue this publisher feeds:
+#             queue - target queue name (match amps.queue in the consuming module's config)
+#             rps   - sustained publish rate for that queue, in messages/second
+#             burst - token-bucket capacity: how many messages can be emitted back-to-back above the
+#                     sustained rate (e.g. right after startup, or catching up after a reconnect pause)
+amps:
+  publisher:
+    client-name: order-publisher
+    uris:
+      - tcp://172.21.12.69:9107/amps/json
+#      - tcp://172.21.12.69:9117/amps/json
+    targets:
+      - queue: /queue/orders
+        rps: 1
+        burst: 2
+
+logging:
+  level:
+    com.bmo.amps.publisher.readable: DEBUG

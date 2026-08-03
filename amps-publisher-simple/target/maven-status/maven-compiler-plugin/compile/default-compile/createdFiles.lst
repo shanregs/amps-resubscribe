@@ -1,4 +1,3 @@
-com\bmo\amps\publisher\AmpsPublisher$RunawayGuardDelayStrategy.class
 com\bmo\amps\publisher\RateLimiter.class
 com\bmo\amps\publisher\SimplePublisherApplication.class
 com\bmo\amps\publisher\AmpsPublishConfig$Target.class

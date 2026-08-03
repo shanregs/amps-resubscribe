@@ -23,6 +23,8 @@
         <module>amps-reconnect-simple</module>
         <module>amps-publisher-simple</module>
         <module>amps-subscriber-simple</module>
+        <module>amps-publisher-readable</module>
+        <module>amps-subscriber-readable</module>
     </modules>
 
     <properties>

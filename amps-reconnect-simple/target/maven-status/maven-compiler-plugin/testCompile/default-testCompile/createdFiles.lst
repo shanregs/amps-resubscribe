@@ -1,0 +1,4 @@
+com\bmo\amps\simple\AmpsQueueClientTest.class
+com\bmo\amps\simple\AmpsSubscribeConfigTest.class
+com\bmo\amps\simple\AmpsMessageTest.class
+com\bmo\amps\simple\MessageProcessorTest.class

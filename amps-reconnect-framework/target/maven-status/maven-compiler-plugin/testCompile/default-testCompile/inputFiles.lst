@@ -1,0 +1,14 @@
+D:\me\work\bmo\amps-queue\amps-resubscribe\amps-reconnect-framework\src\test\java\com\bmo\amps\resubscribe\DisconnectRecoveryTests.java
+D:\me\work\bmo\amps-queue\amps-resubscribe\amps-reconnect-framework\src\test\java\com\bmo\amps\resubscribe\DuplicateSubscriptionTests.java
+D:\me\work\bmo\amps-queue\amps-resubscribe\amps-reconnect-framework\src\test\java\com\bmo\amps\resubscribe\FailoverTests.java
+D:\me\work\bmo\amps-queue\amps-resubscribe\amps-reconnect-framework\src\test\java\com\bmo\amps\resubscribe\HAClientTestMatrixTests.java
+D:\me\work\bmo\amps-queue\amps-resubscribe\amps-reconnect-framework\src\test\java\com\bmo\amps\resubscribe\IntegrationTests.java
+D:\me\work\bmo\amps-queue\amps-resubscribe\amps-reconnect-framework\src\test\java\com\bmo\amps\resubscribe\MultiReconnectTests.java
+D:\me\work\bmo\amps-queue\amps-resubscribe\amps-reconnect-framework\src\test\java\com\bmo\amps\resubscribe\ReaderRestartTests.java
+D:\me\work\bmo\amps-queue\amps-resubscribe\amps-reconnect-framework\src\test\java\com\bmo\amps\resubscribe\ResubscribeTests.java
+D:\me\work\bmo\amps-queue\amps-resubscribe\amps-reconnect-framework\src\test\java\com\bmo\amps\resubscribe\StartupTests.java
+D:\me\work\bmo\amps-queue\amps-resubscribe\amps-reconnect-framework\src\test\java\com\bmo\amps\resubscribe\support\AmpsProcessController.java
+D:\me\work\bmo\amps-queue\amps-resubscribe\amps-reconnect-framework\src\test\java\com\bmo\amps\resubscribe\support\ConnectionStates.java
+D:\me\work\bmo\amps-queue\amps-resubscribe\amps-reconnect-framework\src\test\java\com\bmo\amps\resubscribe\support\ReconnectCycleHarness.java
+D:\me\work\bmo\amps-queue\amps-resubscribe\amps-reconnect-framework\src\test\java\com\bmo\amps\resubscribe\support\TestContextFactory.java
+D:\me\work\bmo\amps-queue\amps-resubscribe\amps-reconnect-framework\src\test\java\com\bmo\amps\resubscribe\ThreadLeakTests.java

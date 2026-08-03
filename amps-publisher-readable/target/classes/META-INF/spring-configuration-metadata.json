@@ -1,0 +1,30 @@
+{
+  "groups": [
+    {
+      "name": "amps.publisher",
+      "type": "com.bmo.amps.publisher.readable.PublisherSettings",
+      "sourceType": "com.bmo.amps.publisher.readable.PublisherSettings"
+    }
+  ],
+  "properties": [
+    {
+      "name": "amps.publisher.client-name",
+      "type": "java.lang.String",
+      "sourceType": "com.bmo.amps.publisher.readable.PublisherSettings"
+    },
+    {
+      "name": "amps.publisher.targets",
+      "type": "java.util.List<com.bmo.amps.publisher.readable.PublisherSettings$PublishTarget>",
+      "sourceType": "com.bmo.amps.publisher.readable.PublisherSettings"
+    },
+    {
+      "name": "amps.publisher.uris",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "com.bmo.amps.publisher.readable.PublisherSettings"
+    }
+  ],
+  "hints": [],
+  "ignored": {
+    "properties": []
+  }
+}
