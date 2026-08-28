@@ -1,0 +1,268 @@
+<AMPSConfig>
+    <!--
+      AMPS Server Configuration — amps-queue-concurrency
+      ════════════════════════════════════════════════════
+      Server  : 172.21.12.69
+      Transports
+        TCP  9007  client connections  →  tcp://172.21.12.69:9007/amps/json
+        WS   9008  websocket / browser →  ws://172.21.12.69:9008
+        HTTP 8085  admin UI / REST     →  http://172.21.12.69:8085/amps/admin
+
+      Queues declared in this file
+        /queue/trades       primary  — all subscriber profiles  (TRADE payloads)
+        /queue/orders       secondary — order events           (ORDER payloads)
+        /queue/risk         risk metrics                       (RISK  payloads)
+        /queue/test-trades  test profile only (short lease, small journal)
+
+      LeaseTimeout (5 000 ms) matches amps.queue.lease-timeout-ms in application.yaml.
+      FAIL result → no ACK → message returned to queue after TTL → retry path.
+
+      Each queue has a backing SOW topic (key=/id) for current-state lookups,
+      plus a TransactionLog journal for durability across AMPS restarts.
+    -->
+
+    <Name>amps-queue-concurrency-ha-primary</Name>
+
+    <!-- ── Logging ─────────────────────────────────────────────────────────── -->
+    <Logging>
+        <Target>
+            <Protocol>stdout</Protocol>
+            <Level>warning</Level>
+            <IncludeErrors>00-0015</IncludeErrors>
+        </Target>
+        <Target>
+            <Protocol>file</Protocol>
+            <FileName>/home/shan/app-env/data/amps-ha/amps-primary/logs/amps.log</FileName>
+            <Level>info</Level>
+            <RotationThreshold>10MB</RotationThreshold>
+        </Target>
+    </Logging>
+
+    <!-- ── Admin UI ───────────────────────────────────────────────────────── -->
+    <Admin>
+        <InetAddr>0.0.0.0:8185</InetAddr>
+        <SQLTransport>websocket-any</SQLTransport>
+    </Admin>
+
+    <!-- ── Transports ─────────────────────────────────────────────────────── -->
+    <Transports>
+        <!--
+          Primary client transport.
+          Spring Boot HAClient connects via:  tcp://172.21.12.69:9007/amps/json
+          MessageType json → payload parsed as JSON; /id key extraction works.
+        -->
+        <Transport>
+            <Name>tcp-json</Name>
+            <Type>tcp</Type>
+            <InetAddr>0.0.0.0:9107</InetAddr>
+            <Protocol>amps</Protocol>
+            <MessageType>json</MessageType>
+        </Transport>
+
+        <!-- WebSocket transport for browser / SQL clients -->
+        <Transport>
+            <Name>websocket-any</Name>
+            <Protocol>websocket</Protocol>
+            <Type>tcp</Type>
+            <InetAddr>0.0.0.0:9108</InetAddr>
+        </Transport>
+    </Transports>
+
+    <!-- ── SOW — backing state-of-the-world topics ────────────────────────── -->
+    <!--
+      Each queue requires an underlying SOW topic that stores the current state.
+      Key=/id maps to the "id" field in every JSON payload produced by
+      MessagePayloadFactory (TRADE, ORDER, RISK, CUSTOM templates).
+    -->
+    <SOW>
+
+        <!-- ── /queue/trades backing store ──────────────────────────────── -->
+        <Topic>
+            <Name>trades</Name>
+            <MessageType>json</MessageType>
+            <Key>/id</Key>
+            <FileName>/home/shan/app-env/data/amps-ha/amps-primary/sow/trades.sow</FileName>
+        </Topic>
+
+        <!--
+          /queue/trades — primary queue consumed by all subscriber profiles.
+
+          LeaseTimeout  5 000 ms — matches amps.queue.lease-timeout-ms.
+            Rule: set to ≥ (maxRetries + 1) × avg_processing_ms × 2.
+            Default maxRetries = 3, avg < 50 ms → 5 000 ms is safe.
+
+          MaxBacklog  1 000 000 — hard back-pressure ceiling.
+            Producers are slowed when queue depth exceeds this value.
+        -->
+        <Queue>
+            <Name>/queue/trades</Name>
+            <MessageType>json</MessageType>
+            <Semantics>at-least-once</Semantics>
+            <UnderlyingTopic>trades</UnderlyingTopic>
+            <LeaseTimeout>5000</LeaseTimeout>
+            <MaxBacklog>1000000</MaxBacklog>
+        </Queue>
+
+        <!-- ── /queue/orders backing store ──────────────────────────────── -->
+        <!--
+          ORDER payloads: orderId, clientId, symbol, type, price, quantity, status.
+          Lower volume than trades → smaller MaxBacklog.
+        -->
+        <Topic>
+            <Name>orders</Name>
+            <MessageType>json</MessageType>
+            <Key>/id</Key>
+            <FileName>/home/shan/app-env/data/amps-ha/amps-primary/sow/orders.sow</FileName>
+        </Topic>
+
+        <Queue>
+            <Name>/queue/orders</Name>
+            <MessageType>json</MessageType>
+            <Semantics>at-least-once</Semantics>
+            <UnderlyingTopic>orders</UnderlyingTopic>
+            <LeaseTimeout>5000</LeaseTimeout>
+            <MaxBacklog>500000</MaxBacklog>
+        </Queue>
+
+        <!-- ── /queue/risk backing store ─────────────────────────────────── -->
+        <!--
+          RISK payloads: portfolioId, exposure, var95, pnl.
+          Lower frequency; larger per-message payload → moderate backlog.
+        -->
+        <Topic>
+            <Name>risk</Name>
+            <MessageType>json</MessageType>
+            <Key>/id</Key>
+            <FileName>/home/shan/app-env/data/amps-ha/amps-primary/sow/risk.sow</FileName>
+        </Topic>
+
+        <Queue>
+            <Name>/queue/risk</Name>
+            <MessageType>json</MessageType>
+            <Semantics>at-least-once</Semantics>
+            <UnderlyingTopic>risk</UnderlyingTopic>
+            <LeaseTimeout>5000</LeaseTimeout>
+            <MaxBacklog>250000</MaxBacklog>
+        </Queue>
+
+        <!-- ── /queue/test-trades backing store (test profile only) ──────── -->
+        <!--
+          Used by application-test.yaml; short lease and tiny backlog.
+          Not expected in production — safe to omit on prod servers.
+        -->
+        <Topic>
+            <Name>test-trades</Name>
+            <MessageType>json</MessageType>
+            <Key>/id</Key>
+            <FileName>/home/shan/app-env/data/amps-ha/amps-primary/sow/test-trades.sow</FileName>
+        </Topic>
+
+        <Queue>
+            <Name>/queue/test-trades</Name>
+            <MessageType>json</MessageType>
+            <Semantics>at-least-once</Semantics>
+            <UnderlyingTopic>test-trades</UnderlyingTopic>
+            <LeaseTimeout>2000</LeaseTimeout>
+            <MaxBacklog>10000</MaxBacklog>
+        </Queue>
+
+    </SOW>
+
+    <!-- ── TransactionLog — journal for durability ────────────────────────── -->
+    <!--
+      All SOW topics and their queue overlays are journalled so that
+      messages survive an AMPS restart (messages in flight are re-delivered).
+      JournalSize: maximum size of a single journal segment file before rotation.
+    -->
+    <TransactionLog>
+        <JournalDirectory>/home/shan/app-env/data/amps-ha/amps-primary/journal</JournalDirectory>
+        <JournalSize>1GB</JournalSize>
+
+        <!-- trades -->
+        <Topic>
+            <Name>trades</Name>
+            <MessageType>json</MessageType>
+        </Topic>
+        <Topic>
+            <Name>/queue/trades</Name>
+            <MessageType>json</MessageType>
+        </Topic>
+
+        <!-- orders -->
+        <Topic>
+            <Name>orders</Name>
+            <MessageType>json</MessageType>
+        </Topic>
+        <Topic>
+            <Name>/queue/orders</Name>
+            <MessageType>json</MessageType>
+        </Topic>
+
+        <!-- risk -->
+        <Topic>
+            <Name>risk</Name>
+            <MessageType>json</MessageType>
+        </Topic>
+        <Topic>
+            <Name>/queue/risk</Name>
+            <MessageType>json</MessageType>
+        </Topic>
+
+        <!-- test-trades (include so test runs also survive restarts in dev) -->
+        <Topic>
+            <Name>test-trades</Name>
+            <MessageType>json</MessageType>
+        </Topic>
+        <Topic>
+            <Name>/queue/test-trades</Name>
+            <MessageType>json</MessageType>
+        </Topic>
+
+    </TransactionLog>
+
+    <!-- ── Actions ────────────────────────────────────────────────────────── -->
+    <Actions>
+
+        <!-- Prune journal files older than 7 days on every startup -->
+        <Action>
+            <On>
+                <Module>amps-action-on-startup</Module>
+            </On>
+            <Do>
+                <Module>amps-action-do-remove-journal</Module>
+                <Options>
+                    <Age>7d</Age>
+                </Options>
+            </Do>
+        </Action>
+
+        <!-- Emergency shutdown when disk usage exceeds 95 % -->
+        <Action>
+            <On>
+                <Module>amps-action-on-schedule</Module>
+                <Options>
+                    <Name>Periodic file system disk usage check</Name>
+                    <Every>10s</Every>
+                </Options>
+            </On>
+            <If>
+                <Module>amps-action-if-file-system-usage</Module>
+                <Options>
+                    <Path>./</Path>
+                    <GreaterThan>95%</GreaterThan>
+                </Options>
+            </If>
+            <Do>
+                <Module>amps-action-do-echo-message</Module>
+                <Options>
+                    <Message>CRITICAL: Shutting down AMPS due to lack of disk space</Message>
+                </Options>
+            </Do>
+            <Do>
+                <Module>amps-action-do-shutdown</Module>
+            </Do>
+        </Action>
+
+    </Actions>
+
+</AMPSConfig>

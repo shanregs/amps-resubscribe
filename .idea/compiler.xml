@@ -22,7 +22,7 @@
       <module name="amps-reconnect-simple" options="-parameters" />
       <module name="amps-resubscribe" options="" />
       <module name="amps-resubscribe (1)" options="-parameters" />
-      <module name="amps-subscriber-readable" options="-parameters" />
+      <module name="amps-subscriber-readable" options="-parameters --add-modules java.desktop" />
       <module name="amps-subscriber-simple" options="-parameters" />
     </option>
   </component>
