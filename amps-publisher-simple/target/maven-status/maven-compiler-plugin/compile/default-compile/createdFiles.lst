@@ -1,8 +1,0 @@
-com\bmo\amps\publisher\RateLimiter.class
-com\bmo\amps\publisher\SimplePublisherApplication.class
-com\bmo\amps\publisher\AmpsPublishConfig$Target.class
-com\bmo\amps\publisher\AmpsPublisher$LoggingDelayStrategy.class
-META-INF\spring-configuration-metadata.json
-com\bmo\amps\publisher\AmpsPublishConfig.class
-com\bmo\amps\publisher\OrderPayloadGenerator.class
-com\bmo\amps\publisher\AmpsPublisher.class

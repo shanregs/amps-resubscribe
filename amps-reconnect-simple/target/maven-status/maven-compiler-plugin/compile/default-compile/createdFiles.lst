@@ -1,8 +1,0 @@
-com\bmo\amps\simple\AmpsQueueClient.class
-com\bmo\amps\simple\MessageProcessor.class
-com\bmo\amps\simple\AmpsQueueClient$ClientState.class
-com\bmo\amps\simple\AmpsMessage.class
-com\bmo\amps\simple\AmpsSubscribeConfig$ClientDef.class
-META-INF\spring-configuration-metadata.json
-com\bmo\amps\simple\AmpsSubscribeConfig.class
-com\bmo\amps\simple\Application.class

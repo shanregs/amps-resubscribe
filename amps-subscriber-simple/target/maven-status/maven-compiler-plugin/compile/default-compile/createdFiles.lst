@@ -1,9 +1,0 @@
-com\bmo\amps\subscriber\MessageProcessor.class
-com\bmo\amps\subscriber\AmpsMessage.class
-com\bmo\amps\subscriber\AmpsSubscriber.class
-com\bmo\amps\subscriber\AmpsSubscribeConfig$ClientDef.class
-com\bmo\amps\subscriber\AmpsClientConnection.class
-com\bmo\amps\subscriber\AmpsSubscribeConfig.class
-META-INF\spring-configuration-metadata.json
-com\bmo\amps\subscriber\LoggingDelayStrategy.class
-com\bmo\amps\subscriber\SimpleSubscriberApplication.class
