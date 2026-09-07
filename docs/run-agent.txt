@@ -1,0 +1,13 @@
+Run the field-mapping-auditor agent.
+
+Use the mapping CSV and all relevant actual input files in this repository.
+
+Perform the complete field mapping audit according to the agent instructions.
+
+Do not modify any source code.
+
+Generate:
+- analysis/mapping-validation.md
+- analysis/ba-questions.md
+
+At the end, provide a concise audit summary.
